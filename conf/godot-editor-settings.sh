@@ -14,6 +14,7 @@ cat << EOF >> ~/.config/godot/editor_settings-4.tres
 
 [resource]
 filesystem/import/blender/blender3_path = "/base/blender"
+filesystem/import/blender/enabled = true
 export/android/android_sdk_path = "/usr/local/lib/android/sdk"
 export/windows/rcedit = "/base/bin/rcedit-x64.exe"
 export/windows/wine = "`which wine`"
