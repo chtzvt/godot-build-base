@@ -26,8 +26,8 @@ curl -s -L "$SDK_URL/$OSX_VERSION/${FILE_NAME}" -o "$OSXCROSS_FOLDER/tarballs/${
 
 OSXCROSS_TARGET=${OSXCROSS_FOLDER}/target
 
-echo "export OSXCROSS_TARGET=${OSXCROSS_TARGET}" >> /base/conf/osxcross.env
-echo "export OSXCROSS_FOLDER=${OSXCROSS_FOLDER}" >> /base/conf/osxcross.env
+echo "OSXCROSS_TARGET=${OSXCROSS_TARGET}" >> /base/conf/osxcross.env
+echo "OSXCROSS_FOLDER=${OSXCROSS_FOLDER}" >> /base/conf/osxcross.env
 
 # Build osxcross
 echo "Building osxcross..."
@@ -55,6 +55,8 @@ LINKER_FILE="$(findTarget "x86_64-apple-darwin*-clang")"
 AR_FILE="$(findTarget "x86_64-apple-darwin*-ar")"
 
 echo "Setting: CARGO_TARGET_X86_64_APPLE_DARWIN_RUSTFLAGS=\"-C linker=${AR_FILE} -C linker=${LINKER_FILE} -C link-arg=-undefined -C link-arg=dynamic_lookup\"" 
-echo "export CARGO_TARGET_X86_64_APPLE_DARWIN_LINKER=${LINKER_FILE}" >> /base/conf/osxcross.env
-echo "export CARGO_TARGET_X86_64_APPLE_DARWIN_RUSTFLAGS=-Car=${AR_FILE},-Clink-arg=-undefined,-Clink-arg=dynamic_lookup" >> /base/conf/osxcross.env
-echo "export OSXCROSS_ROOT=$OSXCROSS_FOLDER" >> /base/conf/osxcross.env
+echo "CARGO_TARGET_X86_64_APPLE_DARWIN_LINKER=${LINKER_FILE}" >> /base/conf/osxcross.env
+echo "CARGO_TARGET_X86_64_APPLE_DARWIN_RUSTFLAGS=-Car=${AR_FILE},-Clink-arg=-undefined,-Clink-arg=dynamic_lookup" >> /base/conf/osxcross.env
+echo "OSXCROSS_ROOT=$OSXCROSS_FOLDER" >> /base/conf/osxcross.env
+
+cat /base/conf/osxcross.env >> /etc/environment
