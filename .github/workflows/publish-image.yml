@@ -5,6 +5,13 @@ on:
   push:
     branches:
       - '**'
+    paths-ignore:
+      - '.**'
+      - 'LICENSE'
+      - 'ACKNOWLEDGEMENTS'
+      - '.github/**'
+      - '**.md'
+      - '**.yml'
   release:
     types: [published]
 
@@ -33,6 +40,13 @@ jobs:
       - name: downcase REPO
         run: |
           echo "REPO=${GHCR_ORG,,}" >>${GITHUB_ENV}
+      - name: Set container tag
+        run: |
+          if [[ "${{github.ref_name}}" == "main" ]]; then
+            echo "CONTAINER_TAG=latest" >>${GITHUB_ENV}
+          else
+            echo "CONTAINER_TAG=${{github.ref_name}}" >>${GITHUB_ENV}
+          fi
       - name: Build and publish image
         run: |
           docker build . --tag ${{ env.REGISTRY }}/${{ env.REPO }}/${{ env.CONTAINER_NAME }}:${{ env.CONTAINER_TAG }}
